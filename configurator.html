@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صمم ديكور مناسبتك - Everyday Events</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .price-display {
+            font-size: 2em;
+            color: #e74c3c;
+            font-weight: bold;
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #f39c12;
+        }
+        
+        .configurator-section {
+            background: white;
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .option-card {
+            border: 3px solid #ecf0f1;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            text-align: center;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .option-card.selected {
+            border-color: #e74c3c;
+            background: #fff5f5;
+            transform: translateY(-3px);
+        }
+        
+        .option-image {
+            width: 100px;
+            height: 100px;
+            background: #ecf0f1;
+            margin: 0 auto 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+        }
+        
+        .option-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .option-price {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .preview-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .preview-area {
+            min-height: 300px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .preview-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .summary-section {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #27ae60;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #128c7e;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 صمم ديكور مناسبتك - Everyday Events</h1>
+            <p>اختر العناصر التي تناسب ذوقك وميزانيتك</p>
+        </div>
+        
+        <div class="price-display" id="totalPrice">6,650 جنيه مصري</div>
+        
+        <!-- قسم نوع الباكيج -->
+        <div class="configurator-section">
+            <h3 class="section-title">1. اختر نوع الباكيج</h3>
+            <div class="options-grid">
+                <div class="option-card" data-category="package" data-option="25" data-price="6650" data-name="باكيج 25 شخص">
+                    <div class="option-image">👥</div>
+                    <div class="option-title">باكيج 25 شخص</div>
+                    <div class="option-price">6,650 جنيه</div>
+                </div>
+                <div class="option-card" data-category="package" data-option="50" data-price="10260" data-name="باكيج 50 شخص">
+                    <div class="option-image">👫</div>
+                    <div class="option-title">باكيج 50 شخص</div>
+                    <div class="option-price">10,260 جنيه</div>
+                </div>
+                <div class="option-card" data-category="package" data-option="100" data-price="17955" data-name="باكيج 100 شخص">
+                    <div class="option-image">👨‍👩‍👧‍👦</div>
+                    <div class="option-title">باكيج 100 شخص</div>
+                    <div class="option-price">17,955 جنيه</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- قسم ألوان الزهور -->
+        <div class="configurator-section">
+            <h3 class="section-title">2. اختر لون الزهور</h3>
+            <div class="options-grid">
+                <div class="option-card" data-category="flowers" data-option="white" data-price="0" data-name="زهور بيضاء">
+                    <div class="option-image" style="background: white; border: 1px solid #ddd;">🌹</div>
+                    <div class="option-title">زهور بيضاء</div>
+                    <div class="option-price">مجاناً</div>
+                </div>
+                <div class="option-card" data-category="flowers" data-option="pink" data-price="200" data-name="زهور وردية">
+                    <div class="option-image" style="background: #ff69b4;">🌹</div>
+                    <div class="option-title">زهور وردية</div>
+                    <div class="option-price">+200 جنيه</div>
+                </div>
+                <div class="option-card" data-category="flowers" data-option="red" data-price="300" data-name="زهور حمراء">
+                    <div class="option-image" style="background: #dc143c;">🌹</div>
+                    <div class="option-title">زهور حمراء</div>
+                    <div class="option-price">+300 جنيه</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- قسم نوع الكراسي -->
+        <div class="configurator-section">
+            <h3 class="section-title">3. اختر نوع الكراسي</h3>
+            <div class="options-grid">
+                <div class="option-card" data-category="chairs" data-option="normal" data-price="0" data-name="كراسي عادية">
+                    <div class="option-image">🪑</div>
+                    <div class="option-title">كراسي عادية</div>
+                    <div class="option-price">مجاناً</div>
+                </div>
+                <div class="option-card" data-category="chairs" data-option="decorated" data-price="125" data-name="كراسي مزينة">
+                    <div class="option-image">💺</div>
+                    <div class="option-title">كراسي مزينة</div>
+                    <div class="option-price">+125 جنيه</div>
+                </div>
+                <div class="option-card" data-category="chairs" data-option="acrylic" data-price="500" data-name="كراسي أكريليك">
+                    <div class="option-image">🔳</div>
+                    <div class="option-title">كراسي أكريليك</div>
+                    <div class="option-price">+500 جنيه</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- قسم الإضافات -->
+        <div class="configurator-section">
+            <h3 class="section-title">4. الإضافات الاختيارية</h3>
+            <div class="options-grid">
+                <div class="option-card" data-category="extras" data-option="stairs" data-price="450" data-name="زينة السلالم">
+                    <div class="option-image">🏠</div>
+                    <div class="option-title">زينة السلالم</div>
+                    <div class="option-price">+450 جنيه/متر</div>
+                </div>
+                <div class="option-card" data-category="extras" data-option="lighting" data-price="450" data-name="إضاءة إضافية">
+                    <div class="option-image">💡</div>
+                    <div class="option-title">إضاءة إضافية</div>
+                    <div class="option-price">+450 جنيه</div>
+                </div>
+                <div class="option-card" data-category="extras" data-option="welcome_board" data-price="1100" data-name="لوحة ترحيب بلاستيكية">
+                    <div class="option-image">📋</div>
+                    <div class="option-title">لوحة ترحيب</div>
+                    <div class="option-price">+1,100 جنيه</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- قسم المعاينة -->
+        <div class="preview-section">
+            <h3 class="section-title">معاينة التصميم</h3>
+            <div class="preview-area" id="previewArea">
+                <p style="color: #7f8c8d; font-size: 1.2em;">اختر العناصر لرؤية المعاينة</p>
+            </div>
+        </div>
+        
+        <!-- ملخص الطلب -->
+        <div class="summary-section" id="orderSummary" style="display: none;">
+            <h3>ملخص طلبك</h3>
+            <div id="summaryItems"></div>
+            <div class="summary-item" style="font-weight: bold; font-size: 1.2em; border-top: 2px solid #27ae60;">
+                <span>الإجمالي (بعد خصم 5%):</span>
+                <span id="finalPrice">0 جنيه</span>
+            </div>
+        </div>
+        
+        <!-- أزرار العمل -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" onclick="saveDesign()">💾 حفظ التصميم</button>
+            <button class="btn btn-secondary" onclick="loadDesign()">📂 تحميل تصميم محفوظ</button>
+            <button class="whatsapp-btn" onclick="sendToWhatsApp()">📱 إرسال عبر واتساب</button>
+            <button class="btn btn-primary" onclick="submitOrder()">🛒 تأكيد الطلب</button>
+        </div>
+    </div>
+
+    <script>
+        // متغيرات عامة
+        let selectedOptions = {};
+        let basePrice = 6650;
+        let currentTotal = basePrice;
+        
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // تفعيل النقر على الخيارات
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    selectOption(this);
+                });
+            });
+            
+            // تحديد الباكيج الافتراضي
+            document.querySelector('[data-option="25"]').click();
+        });
+        
+        // دالة اختيار الخيار
+        function selectOption(card) {
+            const category = card.dataset.category;
+            const option = card.dataset.option;
+            const price = parseInt(card.dataset.price);
+            const name = card.dataset.name;
+            
+            // إزالة التحديد من نفس الفئة
+            document.querySelectorAll(`[data-category="${category}"]`).forEach(c => {
+                c.classList.remove('selected');
+            });
+            
+            // إضافة التحديد للخيار الحالي
+            card.classList.add('selected');
+            
+            // تحديث الخيارات المحددة
+            selectedOptions[category] = {
+                option: option,
+                price: price,
+                name: name
+            };
+            
+            // تحديث السعر والمعاينة
+            updatePrice();
+            updatePreview();
+            updateSummary();
+        }
+        
+        // تحديث السعر
+        function updatePrice() {
+            let total = 0;
+            
+            // حساب السعر الأساسي من الباكيج
+            if (selectedOptions.package) {
+                total = selectedOptions.package.price;
+            }
+            
+            // إضافة أسعار الخيارات الأخرى
+            Object.keys(selectedOptions).forEach(category => {
+                if (category !== 'package') {
+                    total += selectedOptions[category].price;
+                }
+            });
+            
+            // تطبيق خصم 5%
+            total = Math.round(total * 0.95);
+            currentTotal = total;
+            
+            // تحديث العرض
+            document.getElementById('totalPrice').textContent = total.toLocaleString('ar-EG') + ' جنيه مصري';
+        }
+        
+        // تحديث المعاينة
+        function updatePreview() {
+            const previewArea = document.getElementById('previewArea');
+            
+            if (Object.keys(selectedOptions).length > 1) {
+                previewArea.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <h3 style="color: #2c3e50; margin-bottom: 20px;">تصميمك المخصص</h3>
+                        <div style="background: linear-gradient(45deg, #f39c12, #e74c3c); 
+                                    color: white; padding: 15px; border-radius: 10px; margin: 10px;">
+                            ${selectedOptions.package ? selectedOptions.package.name : 'لم يتم الاختيار'}
+                        </div>
+                        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 20px;">
+                            ${selectedOptions.flowers ? `<div style="background: #ff69b4; color: white; padding: 10px; border-radius: 5px; margin: 5px;">${selectedOptions.flowers.name}</div>` : ''}
+                            ${selectedOptions.chairs ? `<div style="background: #3498db; color: white; padding: 10px; border-radius: 5px; margin: 5px;">${selectedOptions.chairs.name}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // تحديث ملخص الطلب
+        function updateSummary() {
+            const summarySection = document.getElementById('orderSummary');
+            const summaryItems = document.getElementById('summaryItems');
+            const finalPrice = document.getElementById('finalPrice');
+            
+            if (Object.keys(selectedOptions).length > 0) {
+                summarySection.style.display = 'block';
+                
+                let itemsHTML = '';
+                Object.keys(selectedOptions).forEach(category => {
+                    const item = selectedOptions[category];
+                    itemsHTML += `
+                        <div class="summary-item">
+                            <span>${item.name}</span>
+                            <span>${item.price > 0 ? '+' : ''}${item.price.toLocaleString('ar-EG')} جنيه</span>
+                        </div>
+                    `;
+                });
+                
+                summaryItems.innerHTML = itemsHTML;
+                finalPrice.textContent = currentTotal.toLocaleString('ar-EG') + ' جنيه';
+            }
+        }
+        
+        // حفظ التصميم
+        function saveDesign() {
+            localStorage.setItem('everyday_events_design', JSON.stringify(selectedOptions));
+            alert('تم حفظ التصميم بنجاح! 💾');
+        }
+        
+        // تحميل التصميم المحفوظ
+        function loadDesign() {
+            const savedDesign = localStorage.getItem('everyday_events_design');
+            if (savedDesign) {
+                selectedOptions = JSON.parse(savedDesign);
+                
+                // تطبيق التحديدات المحفوظة
+                Object.keys(selectedOptions).forEach(category => {
+                    const option = selectedOptions[category].option;
+                    const card = document.querySelector(`[data-category="${category}"][data-option="${option}"]`);
+                    if (card) {
+                        card.click();
+                    }
+                });
+                
+                alert('تم تحميل التصميم المحفوظ! 📂');
+            } else {
+                alert('لا يوجد تصميم محفوظ!');
+            }
+        }
+        
+        // إرسال عبر واتساب
+        function sendToWhatsApp() {
+            if (Object.keys(selectedOptions).length === 0) {
+                alert('اختر العناصر أولاً!');
+                return;
+            }
+            
+            let message = `مرحباً! أريد حجز باكيج من Everyday Events:\n\n`;
+            
+            Object.keys(selectedOptions).forEach(category => {
+                const item = selectedOptions[category];
+                message += `✅ ${item.name}`;
+                if (item.price > 0) {
+                    message += ` (+${item.price} جنيه)`;
+                }
+                message += `\n`;
+            });
+            
+            message += `\n💰 الإجمالي: ${currentTotal.toLocaleString('ar-EG')} جنيه`;
+            message += `\n\n📞 برجاء التواصل لتأكيد الحجز`;
+            
+            const whatsappURL = `https://wa.me/[YOUR_WHATSAPP_NUMBER]?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        }
+        
+        // تأكيد الطلب
+        function submitOrder() {
+            if (Object.keys(selectedOptions).length === 0) {
+                alert('اختر العناصر أولاً!');
+                return;
+            }
+            
+            // جمع بيانات العميل
+            const customerName = prompt('الاسم الكامل:');
+            if (!customerName) return;
+            
+            const customerPhone = prompt('رقم الهاتف:');
+            if (!customerPhone) return;
+            
+            const eventDate = prompt('تاريخ المناسبة (مثال: 15/7/2025):');
+            if (!eventDate) return;
+            
+            const eventLocation = prompt('عنوان المناسبة:');
+            if (!eventLocation) return;
+            
+            // إنشاء رسالة الطلب
+            let orderMessage = `🎉 طلب حجز جديد من Everyday Events\n\n`;
+            orderMessage += `👤 الاسم: ${customerName}\n`;
+            orderMessage += `📱 الهاتف: ${customerPhone}\n`;
+            orderMessage += `📅 تاريخ المناسبة: ${eventDate}\n`;
+            orderMessage += `📍 العنوان: ${eventLocation}\n\n`;
+            orderMessage += `🛍️ تفاصيل الطلب:\n`;
+            
+            Object.keys(selectedOptions).forEach(category => {
+                const item = selectedOptions[category];
+                orderMessage += `✅ ${item.name}`;
+                if (item.price > 0) {
+                    orderMessage += ` (+${item.price} جنيه)`;
+                }
+                orderMessage += `\n`;
+            });
+            
+            orderMessage += `\n💰 الإجمالي: ${currentTotal.toLocaleString('ar-EG')} جنيه`;
+            orderMessage += `\n💵 (شامل خصم 5%)`;
+            
+            // إرسال عبر واتساب
+            const whatsappURL = `https://wa.me/[YOUR_WHATSAPP_NUMBER]?text=${encodeURIComponent(orderMessage)}`;
+            window.open(whatsappURL, '_blank');
+            
+            // رسالة تأكيد للعميل
+            alert(`شكراً لك ${customerName}!\nتم إرسال طلبك بنجاح 🎉\nسيتم التواصل معك قريباً لتأكيد التفاصيل`);
+        }
+    </script>
+</body>
+</html>
